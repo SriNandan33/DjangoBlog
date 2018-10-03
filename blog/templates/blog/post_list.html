@@ -1,15 +1,19 @@
 {% extends 'blog/base.html' %}
 
+{% load humanize %}
+
 {% block content %}
     	
     {% for post in posts %}
         <div class="post">
-            {% if post.published_date %}
-                <div class="date">
-                    <p>published: {{ post.published_date }}</p>
-                </div>
-            {% endif %}
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <div class="post-footer">
+                {% if post.published_date %}
+                    <div class="date">
+                        <p>{{ post.published_date|naturaltime }}</p>
+                    </div>
+                {% endif %}
+            </div>
             <p>{{ post.text|linebreaksbr }}</p>
             <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
         </div>
